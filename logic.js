@@ -22,7 +22,7 @@ class ToDos extends React.Component {
     HandleDone(index) {
         this.props.clickasDone(index);
     }
-    HandlePriority() {
+    HandlePriority(key) {
         this.setState({
             isPriority: !this.state.isPriority
         })
@@ -31,10 +31,6 @@ class ToDos extends React.Component {
 
     render() {
         var background = this.state.isPriority ? "yellow" : "";
-
-
-
-
         return (
             <div>
                 <h1>Tasks to do </h1>
@@ -43,8 +39,8 @@ class ToDos extends React.Component {
                     {this.props.tasks.map((x, i) =>
                         <li className="items" key={i}>{`${x.name} on ${x.day}/${x.month}`}
                             <div className="buttonContainer">
-                                <button className="done" onClick={() => this.HandleDone(i)}><i className="fas fa-check"></i></button>
-                                <button className="priority" onClick={() => this.HandlePriority()}><i className="far fa-star" style={{ "backgroundColor": background }}></i></button>
+                                <button className="done" onClick={() => this.HandleDone(i)}><i className={`fas fa-check`}></i></button>
+                                <button className="priority" onClick={() => this.HandlePriority(i)}><i className="far fa-star" style={{ "backgroundColor": background }}></i></button>
                                 <button className="delete" onClick={() => this.HandleClick(i)}>x</button>
                             </div>
                         </li>
@@ -60,19 +56,25 @@ class Done extends React.Component {
     constructor(props) {
         super(props);
         this.HandleMistake = this.HandleMistake.bind(this);
+        this.DeleteDone = this.DeleteDone.bind(this);
     }
 
+    DeleteDone(index) {
+        this.props.clickdelete(index);
+    }
     HandleMistake(index) {
         this.props.clickToDo(index);
     }
     render() {
-        console.log(this.props)
         return (
             <div>
                 <h1>Tasks Done </h1>
                 <ul>
                     {this.props.doneTasks.map((x, i) =>
-                        <li className="items" key={i}>{`${x.name} on ${x.day}/${x.month} `}<button className="buttonToDo" onClick={() => this.HandleMistake(i)}>TO DO</button></li>
+                        <li className="items" key={i}>{`${x.name} on ${x.day}/${x.month} `}
+                            <button className="buttonToDo" onClick={() => this.HandleMistake(i)}>TO DO</button>
+                            <button className="delete" onClick={() => this.DeleteDone(i)}>x</button>
+                        </li>
                     )}
                 </ul>
             </div>
@@ -87,13 +89,14 @@ class App extends React.Component {
         this.state = {
             tasks: [],
             donetasks: [],
-            userInput: ""
+            //userInput: ""
         };
         this.handleSubmit = this.handleSubmit.bind(this);
-        this.deleteToDo = this.deleteToDo.bind(this)
+        this.deleteToDo = this.deleteToDo.bind(this);
+        this.deleteDone = this.deleteDone.bind(this);
         this.MarkedasDone = this.MarkedasDone.bind(this);
         this.isMistake = this.isMistake.bind(this);
-        this.deleteInput = this.deleteInput.bind(this);
+        //this.deleteInput = this.deleteInput.bind(this);
     }
 
     handleSubmit(event) {
@@ -106,7 +109,7 @@ class App extends React.Component {
 
         this.state.tasks.push(new_task);
         this.setState({ tasks: this.state.tasks });
-        this.deleteInput();
+        //setTimeout(this.deleteInput(),1000);
 
     }
 
@@ -120,6 +123,15 @@ class App extends React.Component {
         array.splice(index, 1);
         this.setState({
             tasks: array,
+        })
+    }
+
+    deleteDone(index) {
+        event.preventDefault();
+        const array = this.state.donetasks;
+        array.splice(index, 1);
+        this.setState({
+            donetasks: array,
         })
     }
     MarkedasDone(index) {
@@ -145,21 +157,18 @@ class App extends React.Component {
     }
 
 
-    deleteInput() {
+    /*deleteInput() {
         document.getElementById("userInput").value = "";
-    }
-
-
-
-
+    }*/
 
 
     render() {
+       
         return (
             <div className="container">
                 <div className="row">
                     <div className="col-xs-12">
-                        <h1>Deborah's TO DO List</h1>
+                        <h1>Don't forget to:</h1>
                     </div>
                     <div className="row">
                         <div className="col-xs-12">
@@ -182,7 +191,7 @@ class App extends React.Component {
                     </div>
                     <div className="row">
                         <div className="col-xs-12">
-                            {this.state.donetasks.length > 0 ? <Done doneTasks={this.state.donetasks} clickToDo={this.isMistake} /> : null
+                            {this.state.donetasks.length > 0 ? <Done doneTasks={this.state.donetasks} clickToDo={this.isMistake} clickdelete={this.deleteDone} /> : null
                             }
 
 
@@ -199,7 +208,10 @@ class App extends React.Component {
 
 function render() {
     ReactDOM.render(
-        <App />,
+        <div>
+        <div className="header"><img className="logo"src="./images/to-do-list.jpg"></img>Deborah's TO DO List</div>
+        <App />
+        </div>,
         document.getElementById("root")
     );
 }
