@@ -1,0 +1,108 @@
+body {
+    background-image:url("./images/background_53876-58930.jpg");
+    background-repeat:no-repeat;
+    background-size:cover;
+    display:flex;
+    justify-content: center;
+    font-family: 'Permanent Marker', cursive;
+   
+}
+.container{
+    height:100vh;
+    width:100vw;
+    display:flex;
+    justify-content: center;
+    font-family: 'Permanent Marker', cursive;
+}
+h1,ul{
+    color:purple;
+}
+
+.input.userinput{
+    widows: 100%;
+}
+
+.items{
+    border:2px solid grey;
+    border-radius:25px;
+    margin:10px;    
+    padding:10px;
+    display:flex;
+    font-size:17px;
+    font-family: 'Permanent Marker', cursive;
+   
+}
+
+
+.buttonContainer{
+    display:flex;
+    align-items:center;
+
+}
+button{
+    height:30px;
+    width:30px;
+    
+}
+
+button:hover{
+    cursor:pointer;
+    box-shadow:5px 5px 5px grey;
+    border:5px solid grey;
+
+}
+
+
+.delete{
+    background-color:lightgrey;
+    color:red;
+}
+.fas.fa-check{
+    color:green;
+    font-size:20px;
+}
+
+.far.fa-star{
+    font-size:15px;
+
+}
+ul{
+
+    list-style-type: none;
+    width:100%;
+    margin:0px;
+    padding:0px;
+
+}
+
+li{
+
+display:flex;
+justify-content:space-between;
+align-items:center;
+cursor:pointer;
+margin:0px;
+
+}
+
+li .items{
+    width:80%;
+    margin:0px;
+
+}
+
+ul li:hover{
+    background-color:purple;
+    box-shadow:10px 10px 10px grey; 
+    color:white;
+ }
+
+ .buttonToDo{
+     width:90px;
+ }
+
+ .buttonToDo:hover{
+     background-color:red;
+     color:white;
+ }
+
